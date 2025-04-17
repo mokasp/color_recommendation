@@ -26,7 +26,7 @@ def index():
 
 @app.route('/button1')
 def button1():
-    return render_template('predict.html')
+    return render_template('button1.html')
 
 @app.route('/process_image', methods=['GET', 'POST'])
 def process_image():
