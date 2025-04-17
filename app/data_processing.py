@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import colorspace.get_lab_vector as get_lab_vector
+from .colorspace import get_lab_vector
 import cv2
 import numpy as np
 
