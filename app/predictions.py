@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from .colorspace import process_color_lists
-from .data_processing import get_all_regions, unnormalize_vector
+from .data_processing import get_all_regions, unnormalize_vector, process_regions
 from colormath.color_objects import LabColor
 from colormath.color_diff import delta_e_cie2000
 
