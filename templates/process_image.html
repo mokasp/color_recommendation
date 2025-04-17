@@ -10,7 +10,7 @@
         <h1>Webcam Capture</h1>
         <video id="webcam" width="1280" height="720" autoplay></video>
         <br>
-        <button id="captureBtn">Capture</button>
+        <button id="snap">Capture</button>
 
         <h3>Captured Image:</h3>
         <canvas id="canvas" width="1280" height="720" style="display:none;"></canvas>
@@ -54,6 +54,7 @@
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
                 const dataURL = canvas.toDataURL('image/jpeg');
                 imageInput.value = dataURL;
+                document.getElementById('upload-form').submit();
             });
         </script>
     </body>
