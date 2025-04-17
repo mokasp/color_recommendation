@@ -6,7 +6,7 @@ app = Flask(__name__)
 model = tf.keras.models.load_model('test_model_00.keras')
 
 @app.route('/')
-def hello_world():
+def index():
     return render_template('index.html')
 
 @app.route('/predict')

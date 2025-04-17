@@ -7,6 +7,8 @@
     <body>
         <h1>I am testing the color recommendation system</h1>
         <p>Testing front end</p>
-        <a href="{{ url_for('predict') }}"></a>
+        <form action="{{ url_for('predict') }}">
+            <button type="submit">Go to Prediction page</button>
+        </form>
     </body>
 </html>
