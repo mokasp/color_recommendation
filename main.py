@@ -7,6 +7,7 @@ from io import BytesIO
 import numpy as np
 import cv2
 from app.colorspace import load_colors, process_color_lists
+from app.predictions import predict
 import mediapipe as mp
 import logging
 
@@ -23,8 +24,8 @@ color_lists_lab = process_color_lists(color_lists)
 def index():
     return render_template('index.html')
 
-@app.route('/predict')
-def predict():
+@app.route('/button1')
+def button1():
     return render_template('predict.html')
 
 @app.route('/process_image', methods=['GET', 'POST'])
