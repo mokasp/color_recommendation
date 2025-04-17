@@ -6,10 +6,18 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import cv2
+from app.colorspace import load_colors, process_color_lists
+import mediapipe as mp
+import logging
 
 
 app = Flask(__name__)
 model = tf.keras.models.load_model('test_model_00.keras')
+# load MediaPipe Face Mesh
+mp_face_mesh = mp.solutions.face_mesh
+
+colors, color_lists = load_colors()
+color_lists_lab = process_color_lists(color_lists)
 
 @app.route('/')
 def index():
@@ -33,6 +41,11 @@ def process_image():
             if img is not None:
                 _, buffer = cv2.imencode('.jpg', img)
                 img_base64 = base64.b64encode(buffer).decode('utf-8')
+
+                prediction, input_vectors_lab, output_lab = predict(img, mp_face_mesh, model)
+                logging.debug(f"prediction: {prediction}")
+                logging.debug(f"input_lab_vectors: {input_vectors_lab}")
+                logging.debug(f"output_lab: {output_lab}")
 
 
                 return f'<h2>Image received!</h2><img src="data:image/jpeg;base64,{img_base64}" width="1280">'

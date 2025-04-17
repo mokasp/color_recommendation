@@ -4,3 +4,5 @@ tensorflow
 Pillow
 numpy
 opencv-python
+skimage
+colormath
