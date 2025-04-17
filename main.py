@@ -35,7 +35,7 @@ def process_image():
                 img_base64 = base64.b64encode(buffer).decode('utf-8')
 
 
-                return f'<h2>Image received!</h2><img src="data:image/jpeg;base64,{img_base64}" width="300">'
+                return f'<h2>Image received!</h2><img src="data:image/jpeg;base64,{img_base64}" width="1280">'
             else:
                 return 'Error decoding image'
         else:
