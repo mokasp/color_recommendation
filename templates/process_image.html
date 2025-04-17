@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Recommendation System</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+        <h1>Webcam Capture</h1>
+        <video id="webcam" width="1280" height="720" autoplay></video>
+        <br>
+        <button id="captureBtn">Capture</button>
+
+        <h3>Captured Image:</h3>
+        <canvas id="canvas" width="1280" height="720" style="display:none;"></canvas>
+        <img id="capturedImage" />
+
+        <script>
+            const video = document.getElementById('webcam');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            const capturedImage = document.getElementById('capturedImage');
+
+            
+
+            const constraints = {
+                video: {
+                    facingMode: "user",
+                    width: { ideal: 1280 },
+                    height: { ideal: 720}
+                }};
+
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then(stream => {
+                    video.srcObject = stream;
+                })
+                .catch(err => {
+                    console.log("ERROR ACCESSING WEBCAM", err);
+                });
+            
+            document.getElementById('captureBtn').addEventListener('click', () => {
+
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const dataURL = canvas.toDataURL('image/png');
+                capturedImage.src = dataURL;
+                fetch('/process_image', {
+                    method:'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ image: dataURL })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.message);
+                })
+                    .catch(err => {
+                        console.error('Error:', err);
+                });
+            });
+        </script>
+    </body>
+</html>
