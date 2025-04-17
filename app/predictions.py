@@ -3,6 +3,7 @@ from .colorspace import process_color_lists
 from .data_processing import get_all_regions, unnormalize_vector, process_regions
 from colormath.color_objects import LabColor
 from colormath.color_diff import delta_e_cie2000
+import numpy as np
 
 def predict(img, face_mesh, model):
     input_regions, output_regions, region_names = get_all_regions(img, face_mesh)
