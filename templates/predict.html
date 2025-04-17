@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Recommendation System</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+        <h1>I am testing the color recommendation system</h1>
+        <p>Prediction</p>
+        <form action="{{ url_for('index') }}">
+            <button type="submit">Go back to Index</button>
+        </form>
+    </body>
+</html>
