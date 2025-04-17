@@ -5,6 +5,7 @@ import base64
 from PIL import Image
 from io import BytesIO
 import numpy as np
+import cv2
 
 
 app = Flask(__name__)
@@ -18,14 +19,25 @@ def index():
 def predict():
     return render_template('predict.html')
 
-@app.route('/process_image', methods=['POST', 'GET'])
+@app.route('/process_image', methods=['GET', 'POST'])
 def process_image():
-    data = request.get_json()
-    image_data = data['image']
+    if request.method == 'POST':
+        data_url = request.form['image']  # base64 string
 
-    encoded = image_data.split(",")[1]
-    decoded = base64.b64decode(encoded)
-    image = Image.open(BytesIO(decoded)).convert('RGB')
-    image_np = np.array(image)
+        if data_url.startswith('data:image'):
+            header, encoded = data_url.split(",", 1)
+            image_data = base64.b64decode(encoded)
+            np_arr = np.frombuffer(image_data, np.uint8)
+            img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
 
-    return jsonify({"status": "ok", "message": "Image recieved and processed"})
+            if img is not None:
+                _, buffer = cv2.imencode('.jpg', img)
+                img_base64 = base64.b64encode(buffer).decode('utf-8')
+
+
+                return f'<h2>Image received!</h2><img src="data:image/jpeg;base64,{img_base64}" width="300">'
+            else:
+                return 'Error decoding image'
+        else:
+            return 'Invalid image data'
+    return render_template('process_image.html')

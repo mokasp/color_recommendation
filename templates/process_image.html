@@ -14,13 +14,16 @@
 
         <h3>Captured Image:</h3>
         <canvas id="canvas" width="1280" height="720" style="display:none;"></canvas>
-        <img id="capturedImage" />
+        <form id="upload-form" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="image" id="image-input">
+            <button type="submit">Send to Server</button>
+        </form>
 
         <script>
             const video = document.getElementById('webcam');
             const canvas = document.getElementById('canvas');
-            const context = canvas.getContext('2d');
-            const capturedImage = document.getElementById('capturedImage');
+            const snap = document.getElementById('snap');
+            const imageInput = document.getElementById('image-input');
 
             
 
@@ -34,30 +37,23 @@
             navigator.mediaDevices.getUserMedia(constraints)
                 .then(stream => {
                     video.srcObject = stream;
+
+                    video.onloadedmetadata = () => {
+                        console.log(`Actual resolution: ${video.videoWidth}x${video.videoHeight}`);
+
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                    };
                 })
                 .catch(err => {
                     console.log("ERROR ACCESSING WEBCAM", err);
                 });
             
-            document.getElementById('captureBtn').addEventListener('click', () => {
-
+            snap.addEventListener("click", () => {
+                const context = canvas.getContext('2d');
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const dataURL = canvas.toDataURL('image/png');
-                capturedImage.src = dataURL;
-                fetch('/process_image', {
-                    method:'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ image: dataURL })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data.message);
-                })
-                    .catch(err => {
-                        console.error('Error:', err);
-                });
+                const dataURL = canvas.toDataURL('image/jpeg');
+                imageInput.value = dataURL;
             });
         </script>
     </body>
