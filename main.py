@@ -18,7 +18,7 @@ def index():
 def predict():
     return render_template('predict.html')
 
-@app.route('/process_image', methods=['POST'])
+@app.route('/process_image', methods=['POST', 'GET'])
 def process_image():
     data = request.get_json()
     image_data = data['image']
