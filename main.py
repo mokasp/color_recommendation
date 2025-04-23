@@ -13,6 +13,8 @@ import logging
 
 
 app = Flask(__name__)
+logging.basicConfig(level=logging.DEBUG)
+
 model = tf.keras.models.load_model('test_model_00.keras')
 # load MediaPipe Face Mesh
 mp_face_mesh = mp.solutions.face_mesh
