@@ -38,6 +38,9 @@ def process_image():
             image_data = base64.b64decode(encoded)
             np_arr = np.frombuffer(image_data, np.uint8)
             img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+            logging.debug(f"prediction: {prediction}")
+            logging.debug(f"input_lab_vectors: {input_vectors_lab}")
+            logging.debug(f"output_lab: {output_lab}")
 
             if img is not None:
                 _, buffer = cv2.imencode('.jpg', img)
