@@ -46,8 +46,8 @@ def process_image():
                 _, buffer = cv2.imencode('.jpg', img)
                 img_base64 = base64.b64encode(buffer).decode('utf-8')
 
-                # prediction, input_vectors_lab, output_lab = predict(img, mp_face_mesh, model)
-                # logging.debug(f"prediction: {prediction}")
+                prediction, input_vectors_lab, output_lab = predict(img, mp_face_mesh, model)
+                logging.debug(f"prediction: {prediction}")
                 # logging.debug(f"input_lab_vectors: {input_vectors_lab}")
                 # logging.debug(f"output_lab: {output_lab}")
 
