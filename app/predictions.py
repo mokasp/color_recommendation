@@ -14,6 +14,7 @@ def predict(img, face_mesh, model):
     logging.debug('hit2')
     norm_input_vectors_lab = np.expand_dims(norm_input_vectors_lab, axis=0)
     logging.debug('hit3')
+    logging.debug(norm_input_vectors_lab)
     prediction = model.predict(norm_input_vectors_lab)
     logging.debug('hit4')
 
