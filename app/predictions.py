@@ -15,8 +15,10 @@ def predict(img, face_mesh, model):
     norm_input_vectors_lab, input_vectors_lab, norm_output_lab, output_lab = process_regions(input_regions, output_regions, region_names)
     logging.debug('hit2')
     norm_input_vectors_lab = np.expand_dims(norm_input_vectors_lab, axis=0)
+    norm_input_vectors_lab = np.array(norm_input_vectors_lab, dtype=np.float32)
     logging.debug('hit3')
     logging.debug(norm_input_vectors_lab.shape)
+    logging.debug(norm_input_vectors_lab)
     try:
         logging.debug(f'memory before prediction: {psutil.Process(os.getpid()).memory_info().rss / 1e6:.2f} MB')
         prediction = model.predict(norm_input_vectors_lab)
