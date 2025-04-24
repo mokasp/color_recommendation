@@ -4,8 +4,10 @@ from .data_processing import get_all_regions, unnormalize_vector, process_region
 from colormath.color_objects import LabColor
 from colormath.color_diff import delta_e_cie2000
 import numpy as np
+import logging
 
 def predict(img, face_mesh, model):
+    logging.debug('hit')
     input_regions, output_regions, region_names = get_all_regions(img, face_mesh)
     norm_input_vectors_lab, input_vectors_lab, norm_output_lab, output_lab = process_regions(input_regions, output_regions, region_names)
     norm_input_vectors_lab = np.expand_dims(norm_input_vectors_lab, axis=0)
