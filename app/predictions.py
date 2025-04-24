@@ -5,6 +5,8 @@ from colormath.color_objects import LabColor
 from colormath.color_diff import delta_e_cie2000
 import numpy as np
 import logging
+import psutil
+import os
 
 def predict(img, face_mesh, model):
     logging.debug('hit0')
@@ -15,8 +17,14 @@ def predict(img, face_mesh, model):
     norm_input_vectors_lab = np.expand_dims(norm_input_vectors_lab, axis=0)
     logging.debug('hit3')
     logging.debug(norm_input_vectors_lab.shape)
-    prediction = model.predict(norm_input_vectors_lab)
-    logging.debug('hit4')
+    try:
+        logging.debug(f'memory before prediction: {psutil.Process(os.getpid()).memory_info().rss / 1e6:.2f} MB')
+        prediction = model.predict(norm_input_vectors_lab)
+        logging.debug(f'memory after prediction: {psutil.Process(os.getpid()).memory_info().rss / 1e6:.2f} MB')
+        logging.debug("hit4")
+    except Exception as e:
+        logging.error(f"Model prediction failed: {e}")
+        prediction = "failed"
 
     return prediction, input_vectors_lab, output_lab
 
