@@ -15,7 +15,7 @@ def predict(img, face_mesh, model):
     norm_input_vectors_lab, input_vectors_lab, norm_output_lab, output_lab = process_regions(input_regions, output_regions, region_names)
     logging.debug('hit2')
     norm_input_vectors_lab = np.expand_dims(input_vectors_lab, axis=0)
-    norm_input_vectors_lab = np.array(input_vectors_lab, dtype=np.float32)
+    norm_input_vectors_lab = np.array(norm_input_vectors_lab, dtype=np.float32)
     logging.debug('hit3')
     logging.debug(norm_input_vectors_lab.shape)
     logging.debug(norm_input_vectors_lab)
