@@ -40,13 +40,14 @@ def process_image():
             image_data = base64.b64decode(encoded)
             np_arr = np.frombuffer(image_data, np.uint8)
             img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+            resized_img = cv2.resize(img, (960, 540))
             logging.debug(f"image: {str(np_arr)}")
 
             if img is not None:
-                _, buffer = cv2.imencode('.jpg', img)
+                _, buffer = cv2.imencode('.jpg', resized_img)
                 img_base64 = base64.b64encode(buffer).decode('utf-8')
 
-                prediction, input_vectors_lab, output_lab = predict(img, mp_face_mesh, model)
+                prediction, input_vectors_lab, output_lab = predict(resized_img, mp_face_mesh, model)
                 logging.debug(f"prediction: {prediction}")
                 # logging.debug(f"input_lab_vectors: {input_vectors_lab}")
                 # logging.debug(f"output_lab: {output_lab}")
