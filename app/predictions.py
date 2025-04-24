@@ -7,11 +7,15 @@ import numpy as np
 import logging
 
 def predict(img, face_mesh, model):
-    logging.debug('hit')
+    logging.debug('hit0')
     input_regions, output_regions, region_names = get_all_regions(img, face_mesh)
+    logging.debug('hit1')
     norm_input_vectors_lab, input_vectors_lab, norm_output_lab, output_lab = process_regions(input_regions, output_regions, region_names)
+    logging.debug('hit2')
     norm_input_vectors_lab = np.expand_dims(norm_input_vectors_lab, axis=0)
+    logging.debug('hit3')
     prediction = model.predict(norm_input_vectors_lab)
+    logging.debug('hit4')
 
     return prediction, input_vectors_lab, output_lab
 

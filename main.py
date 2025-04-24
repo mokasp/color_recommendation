@@ -44,7 +44,7 @@ def process_image():
             logging.debug(f"image: {np_arr}")
 
             if img is not None:
-                _, buffer = cv2.imencode('.jpg', resized_img)
+                _, buffer = cv2.imencode('.jpg', img)
                 img_base64 = base64.b64encode(buffer).decode('utf-8')
 
                 prediction, input_vectors_lab, output_lab = predict(resized_img, mp_face_mesh, model)
