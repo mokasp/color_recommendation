@@ -52,7 +52,8 @@ def process_image():
                 # logging.debug(f"output_lab: {output_lab}")
 
 
-                return f'<h2>Image received!</h2><img src="data:image/jpeg;base64,{img_base64}" width="1280">'
+                # return f'<h2>Image received!</h2><img src="data:image/jpeg;base64,{img_base64}" width="1280">'
+                return 'prediction'
             else:
                 return 'Error decoding image'
         else:
