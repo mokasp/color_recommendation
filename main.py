@@ -15,7 +15,7 @@ import logging
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
-model = tf.keras.models.load_model('test_model_00.keras')
+model = tf.keras.models.load_model('test_model_00.keras', compile=False)
 logging.debug(model.summary())
 logging.debug(f"Model size (MB): {model.count_params() * 4 / 1e6:.2f}")
 # load MediaPipe Face Mesh
