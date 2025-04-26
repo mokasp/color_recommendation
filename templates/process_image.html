@@ -20,17 +20,24 @@
         {% if img_data %}
             <h2>Prediction</h2>
             <img src="data:image/jpeg;base64,{{ output_img }}" width="300" alt="processed image">
-            
-            <h2>LAB</h2>
-            <p>{{ prediction }}</p>
-            
-            <h2>RGB</h2>
-            <p>{{ rgb_prediction }}</p>
-            
-            <h2>HEX</h2>
-            <p>{{ hex_prediction }}</p>
     
         {% endif %}
+
+        {% if prediction %}
+            <h2>Prediction</h2>
+            <p>{{ prediction }}</p>
+        {% endif %}
+
+        {% if rgb_prediction %}
+            <h2>RGB</h2>
+            <p>{{ rgb_prediction }}</p>
+        {% endif %}
+
+        {% if hex_prediction %}
+            <h2>HEX</h2>
+            <p>{{ hex_prediction }}</p>
+        {% endif %}
+
 
         <script>
             const video = document.getElementById('video');
