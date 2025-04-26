@@ -10,11 +10,11 @@
         {% if image_data %}
 
 
-            <img src="data:image/jpeg;base64,{{ output_img }}" width="600" alt="processed image">
+            <img src="data:image/jpeg;base64,{{ output_img }}" width="600" alt="processed image"><br>
             <img src="{{ url_for('static', filename=file_name) }}" width="600" height="75" alt="processed image">
-            <h2>LAB: </h2><p>{{ prediction }}</p>
-            <h2>RGB: </h2><p>{{ rgb_prediction }}</p>
-            <h2>  HEX: </h2><p>{{ hex_prediction }}</p>
+            <p><h2>LAB: </h2>{{ prediction }}</p>
+            <p><h2>RGB: </h2>{{ rgb_prediction }}</p>
+            <p><h2>  HEX: </h2>{{ hex_prediction }}</p>
         {% else %}
           <h1>Webcam Capture</h1>
 
