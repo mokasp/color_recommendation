@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 from flask import Flask, render_template, url_for, request, jsonify
-import tensorflow as tf
 import base64
 from PIL import Image
 from io import BytesIO
@@ -15,9 +14,6 @@ import logging
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
-model = tf.keras.models.load_model('test_model_00.keras', compile=False)
-logging.debug(model.summary())
-logging.debug(f"Model size (MB): {model.count_params() * 4 / 1e6:.2f}")
 # load MediaPipe Face Mesh
 mp_face_mesh = mp.solutions.face_mesh
 
@@ -49,8 +45,8 @@ def process_image():
                 _, buffer = cv2.imencode('.jpg', img)
                 img_base64 = base64.b64encode(buffer).decode('utf-8')
 
-                prediction, input_vectors_lab, output_lab = predict(resized_img, mp_face_mesh, model)
-                # logging.debug(f"prediction: {prediction}")
+                prediction, input_vectors_lab, output_lab = predict(resized_img, mp_face_mesh)
+                logging.debug(f"prediction: {prediction}")
                 # logging.debug(f"input_lab_vectors: {input_vectors_lab}")
                 # logging.debug(f"output_lab: {output_lab}")
 

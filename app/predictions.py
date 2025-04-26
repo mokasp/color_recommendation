@@ -7,8 +7,16 @@ import numpy as np
 import logging
 import psutil
 import os
+import requests
 
-def predict(img, face_mesh, model):
+
+def call_model_api(processed_input):
+    url = 'https://model-only.onrender.com/predict'
+    payload = {'input': processed_input.tolist()}
+    response = requests.post(url, json=payload)
+    return response.json().get('prediction')
+
+def predict(img, face_mesh):
     logging.debug('hit0')
     input_regions, output_regions, region_names = get_all_regions(img, face_mesh)
     logging.debug('hit1')
@@ -21,7 +29,7 @@ def predict(img, face_mesh, model):
     logging.debug(norm_input_vectors_lab)
     try:
         logging.debug(f'memory before prediction: {psutil.Process(os.getpid()).memory_info().rss / 1e6:.2f} MB')
-        prediction = model.predict(norm_input_vectors_lab)
+        prediction = call_model_api(norm_input_vectors_lab)
         logging.debug(f'memory after prediction: {psutil.Process(os.getpid()).memory_info().rss / 1e6:.2f} MB')
         logging.debug("hit4")
     except Exception as e:
