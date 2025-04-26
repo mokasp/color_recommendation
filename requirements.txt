@@ -1,10 +1,10 @@
 flask
 gunicorn
 Pillow
-numpy>=1.23
 opencv-python
 scikit-image
 colormath
 mediapipe
 psutil
 requests
+numpy>=1.23
