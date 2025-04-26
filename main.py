@@ -57,14 +57,14 @@ def process_image():
 
                 logging.debug(np.__version__)
 
-                best_color = get_best_color(prediction, color_lists_lab)
+                best_color = get_best_color(prediction, color_lists_lab, color_lists)
                 logging.debug(f"best color: {best_color}")
 
                 best_color_rgb = lab_to_rgb(best_color)
                 logging.debug(f"best color: {best_color_rgb}")
                 hex_color = "#{:02}{:02X}{:02X}".format(best_color_rgb[0], best_color_rgb[1], best_color_rgb[2])
                 
-                str_rgb = str(best_color_rgb[0]) + str(best_color_rgb[1] + 1) + str(best_color_rgb[2] + 1)
+                str_rgb = str(best_color_rgb[0]) + str(best_color_rgb[1]) + str(best_color_rgb[2])
                 file_name = "/colors/shade_" + str_rgb + ".png"
                 logging.debug(file_name)
                 return render_template('process_image.html', image_data=True, output_img=img_base64, file_name=file_name, prediction=prediction, rgb_prediction=best_color_rgb, hex_prediction=hex_color)
