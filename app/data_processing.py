@@ -2,6 +2,7 @@
 from .colorspace import get_lab_vector, combine_lab_values
 import cv2
 import numpy as np
+import logging
 
 def direction(img, h, w, face_results):
     """ determines direction person is facing in the photo to extract the correct region for hair """
@@ -188,6 +189,7 @@ def process_regions(input_regions, output_regions, region_names):
         lip_lab_vector = get_lab_vector(region, region_names[i])
         lip_lab_vectors.append(lip_lab_vector)
         i += 1
+    logging.debug(lip_lab_vectors)
     output_lab = combine_lab_values(lip_lab_vectors[0], lip_lab_vectors[1])
 
     norm_input_vectors_lab = np.array(norm_input_vectors_lab)
