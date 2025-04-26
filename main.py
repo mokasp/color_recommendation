@@ -68,4 +68,4 @@ def process_image():
                 return 'Error decoding image'
         else:
             return 'Invalid image data'
-    return render_template('process_image.html', img_data=False)
+    return render_template('process_image.html', image_data=False)

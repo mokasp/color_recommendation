@@ -16,28 +16,29 @@
           <input type="hidden" name="image" id="image-input">
           <button type="button" id="predict" data-action="/process_image">Predict</button>
         </form>
+        {% if image_data %}
 
-        {% if img_data %}
-            <h2>Prediction</h2>
-            <img src="data:image/jpeg;base64,{{ output_img }}" width="300" alt="processed image">
-    
+            {% if img_data %}
+                <h2>Prediction</h2>
+                <img src="data:image/jpeg;base64,{{ output_img }}" width="300" alt="processed image">
+        
+            {% endif %}
+
+            {% if prediction.any() %}
+                <h2>Prediction</h2>
+                <p>{{ prediction }}</p>
+            {% endif %}
+
+            {% if rgb_prediction.any() %}
+                <h2>RGB</h2>
+                <p>{{ rgb_prediction }}</p>
+            {% endif %}
+
+            {% if hex_prediction.any() %}
+                <h2>HEX</h2>
+                <p>{{ hex_prediction }}</p>
+            {% endif %}
         {% endif %}
-
-        {% if prediction.any() %}
-            <h2>Prediction</h2>
-            <p>{{ prediction }}</p>
-        {% endif %}
-
-        {% if rgb_prediction.any() %}
-            <h2>RGB</h2>
-            <p>{{ rgb_prediction }}</p>
-        {% endif %}
-
-        {% if hex_prediction.any() %}
-            <h2>HEX</h2>
-            <p>{{ hex_prediction }}</p>
-        {% endif %}
-
 
         <script>
             const video = document.getElementById('video');
