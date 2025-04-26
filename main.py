@@ -13,6 +13,7 @@ import logging
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
+np.asscalar = lambda x: float(x)
 
 
 
