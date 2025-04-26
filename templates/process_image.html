@@ -18,11 +18,17 @@
         </form>
 
         {% if img_data %}
-        <h2>Prediction</h2>
-        <img src="data:image/jpeg;base64,{{ output_img }}" width="300" alt="processed image">
-        <h3>LAB</h3><p>{{ prediction }}</p>
-        <h3>RGB</h3><p>{{ rgb_prediction }}</p>
-        <h3>HEX</h3><p>{{ hex_prediction }}</p>
+            <h2>Prediction</h2>
+            <img src="data:image/jpeg;base64,{{ output_img }}" width="300" alt="processed image">
+            
+            <h2>LAB</h2>
+            <p>{{ prediction }}</p>
+            
+            <h2>RGB</h2>
+            <p>{{ rgb_prediction }}</p>
+            
+            <h2>HEX</h2>
+            <p>{{ hex_prediction }}</p>
     
         {% endif %}
 
