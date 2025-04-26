@@ -23,17 +23,17 @@
     
         {% endif %}
 
-        {% if prediction %}
+        {% if prediction.any() %}
             <h2>Prediction</h2>
             <p>{{ prediction }}</p>
         {% endif %}
 
-        {% if rgb_prediction %}
+        {% if rgb_prediction.any() %}
             <h2>RGB</h2>
             <p>{{ rgb_prediction }}</p>
         {% endif %}
 
-        {% if hex_prediction %}
+        {% if hex_prediction.any() %}
             <h2>HEX</h2>
             <p>{{ hex_prediction }}</p>
         {% endif %}
