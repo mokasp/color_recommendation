@@ -8,51 +8,77 @@
     </head>
     <body>
         <h1>Webcam Capture</h1>
-        <video id="webcam" width="1280" height="720" autoplay></video>
-        <br>
-        <button id="snap">Capture</button>
 
-        <canvas id="canvas" width="1280" height="720" style="display:none;"></canvas>
+        <video id="video" width="400" autoplay></video>
+        <canvas id="canvas" style="display: none;"></canvas>
+        <br>
         <form id="upload-form" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="image" id="image-input">
+          <input type="hidden" name="image" id="image-input">
+          <button type="button" id="capture" data-action="/">Capture Frame</button>
+          <button type="button" id="palette" data-action="/palette">Extract Palette</button>
+          <button type="button" id="predict" data-action="/predict">Predict</button>
         </form>
 
+        {% if img_data %}
+        <h2>Prediction</h2>
+        <img src="data:image/jpeg;base64,{{ output_img }}" width="300" alt="processed image">
+        <h3>LAB</h3><p>{{ prediction }}</p>
+        <h3>RGB</h3><p>{{ rgb_prediction }}</p>
+        <h3>HEX</h3><p>{{ hex_prediction }}</p>
+    
+        {% endif %}
+
         <script>
-            const video = document.getElementById('webcam');
+            const video = document.getElementById('video');
             const canvas = document.getElementById('canvas');
-            const snap = document.getElementById('snap');
             const imageInput = document.getElementById('image-input');
-
+            const form = document.getElementById('upload-form');
+          
             const constraints = {
-                video: {
-                    facingMode: "user",
-                    width: { ideal: 1280 },
-                    height: { ideal: 720}
-                }};
-
+              audio: false,
+              video: {
+                width: { ideal: 1280 },
+                height: { ideal: 720 },
+                facingMode: "user"
+              }
+            };
+          
             navigator.mediaDevices.getUserMedia(constraints)
-                .then(stream => {
-                    video.srcObject = stream;
-
-                    video.onloadedmetadata = () => {
-                        console.log(`Actual resolution: ${video.videoWidth}x${video.videoHeight}`);
-
-                        canvas.width = video.videoWidth;
-                        canvas.height = video.videoHeight;
-                    };
-                })
-                .catch(err => {
-                    console.log("ERROR ACCESSING WEBCAM", err);
-                });
-            
-            snap.addEventListener("click", () => {
-                console.log(`clicked`)
-                const context = canvas.getContext('2d');
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const dataURL = canvas.toDataURL('image/jpeg');
-                imageInput.value = dataURL;
-                document.getElementById('upload-form').submit();
-            });
-        </script>
+              .then((stream) => {
+                video.srcObject = stream;
+          
+                // Wait for video metadata to be loaded
+                video.onloadedmetadata = () => {
+                  // resize canvas to match video
+                  const scale = 0.25;
+                  canvas.width = video.videoWidth * scale;
+                  canvas.height = video.videoHeight * scale;
+                };
+              })
+              .catch((err) => {
+                console.error("Error accessing webcam:", err);
+              });
+        
+          function handleCaptureClick(event) {
+            const target = event.target;
+            const action = target.getAttribute('data-action');
+        
+            if (!action) return;
+        
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+            const dataURL = canvas.toDataURL('image/jpeg');
+            imageInput.value = dataURL;
+        
+            form.action = action;
+            form.submit();
+          }
+        
+          document.querySelectorAll('button[data-action]').forEach(button => {
+            button.addEventListener('click', handleCaptureClick);
+          });
+        </script> 
     </body>
 </html>
+        
