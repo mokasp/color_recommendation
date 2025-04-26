@@ -12,9 +12,9 @@
 
             <img src="data:image/jpeg;base64,{{ output_img }}" width="600" alt="processed image"><br>
             <img src="{{ url_for('static', filename=file_name) }}" width="600" height="75" alt="processed image">
-            <p><h2>LAB: </h2>{{ prediction }}</p>
-            <p><h2>RGB: </h2>{{ rgb_prediction }}</p>
-            <p><h2>  HEX: </h2>{{ hex_prediction }}</p>
+            <p><strong>LAB:</strong> {{ prediction }}</p>
+            <p><strong>RGB:</strong> {{ rgb_prediction }}</p>
+            <p><strong>HEX:</strong> {{ hex_prediction }}</p>            
         {% else %}
           <h1>Webcam Capture</h1>
 
