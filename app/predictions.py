@@ -52,7 +52,7 @@ def find_best_color(unnorm_vector, color_lists_lab, color_set=9):
     else:
         i = color_set
         for vector in color_lists_lab[i]:
-            distance = float(delta_e_cie2000(pred_vector, vector))
+            distance = float(delta_e_cie2000(pred_vector, vector).item())
             distances.append(distance)
         min_distance = min(distances)
         min_index = distances.index(min_distance)
