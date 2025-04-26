@@ -49,8 +49,8 @@ def process_image():
 
                 prediction, input_vectors_lab, output_lab = predict(resized_img, mp_face_mesh)
                 logging.debug(f"prediction: {prediction}")
-                # logging.debug(f"input_lab_vectors: {input_vectors_lab}")
-                # logging.debug(f"output_lab: {output_lab}")
+                logging.debug(f"input_lab_vectors: {input_vectors_lab}")
+                logging.debug(f"output_lab: {output_lab}")
 
 
                 return f'<h2>Image received!</h2><img src="data:image/jpeg;base64,{img_base64}" width="1280">'
