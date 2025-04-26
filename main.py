@@ -14,8 +14,7 @@ import logging
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
-# load MediaPipe Face Mesh
-mp_face_mesh = mp.solutions.face_mesh
+
 
 colors, color_lists = load_colors()
 color_lists_lab = process_color_lists(color_lists)
@@ -44,6 +43,9 @@ def process_image():
             if img is not None:
                 _, buffer = cv2.imencode('.jpg', img)
                 img_base64 = base64.b64encode(buffer).decode('utf-8')
+
+                # load MediaPipe Face Mesh
+                mp_face_mesh = mp.solutions.face_mesh
 
                 prediction, input_vectors_lab, output_lab = predict(resized_img, mp_face_mesh)
                 logging.debug(f"prediction: {prediction}")
