@@ -19,10 +19,8 @@
         {% if image_data %}
 
             <h2>Prediction</h2>
+            <img src="data:image/jpeg;base64,{{ output_img }}" width="300" alt="processed image">
             <img src="{{ url_for('static', filename=file_name) }}" width="300" alt="processed image">
-        
-            <h2>Prediction</h2>
-            <img
             <p>{{ prediction }}</p>
 
             <h2>RGB</h2>
