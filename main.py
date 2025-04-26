@@ -54,6 +54,8 @@ def process_image():
                 logging.debug(f"input_lab_vectors: {norm_input_vectors_lab}")
                 logging.debug(f"output_lab: {output_lab}")
 
+                logging.debug(np.__version__)
+
                 best_color = get_best_color(prediction, color_lists_lab)
                 logging.debug(f"best color: {best_color}")
 
