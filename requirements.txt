@@ -7,4 +7,4 @@ colormath
 mediapipe
 psutil
 requests
-numpy>=1.23
+numpy==1.23.5
