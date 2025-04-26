@@ -5,8 +5,8 @@ from PIL import Image
 from io import BytesIO
 import numpy as np
 import cv2
-from app.colorspace import load_colors, process_color_lists
-from app.predictions import predict
+from app.colorspace import load_colors, process_color_lists, lab_to_rgb
+from app.predictions import predict, get_best_color
 import mediapipe as mp
 import logging
 
@@ -54,6 +54,11 @@ def process_image():
                 logging.debug(f"input_lab_vectors: {norm_input_vectors_lab}")
                 logging.debug(f"output_lab: {output_lab}")
 
+                best_color = get_best_color(prediction, color_lists_lab)
+                logging.debug(f"best color: {best_color}")
+
+                best_color_rgb = lab_to_rgb(best_color)
+                logging.debug(f"best color: {best_color_rgb}")
 
                 return f'<h2>Image received!</h2><img src="data:image/jpeg;base64,{img_base64}" width="1280">'
                 # return 'prediction'

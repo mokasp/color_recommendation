@@ -61,10 +61,9 @@ def find_best_color(unnorm_vector, color_lists_lab, color_set=9):
     
     return i, j
 
-def get_best_color(prediction, color_lists, color_set=9):
-    color_lists_lab = process_color_lists(color_lists)
+def get_best_color(prediction, color_lists_lab, color_set=9):
     unnorm_vector = unnormalize_vector(prediction)
     i, j = find_best_color(unnorm_vector, color_lists_lab, color_set=color_set)
 
-    best_color = color_lists[i][j]
+    best_color = color_lists_lab[i][j]
     return best_color
