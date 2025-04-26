@@ -33,7 +33,7 @@ def predict(img, face_mesh):
         logging.error(f"Model prediction failed: {e}")
         prediction = "failed"
 
-    return prediction, input_vectors_lab, output_lab
+    return prediction, input_vectors_lab, output_lab, norm_input_vectors_lab
 
 def find_best_color(unnorm_vector, color_lists_lab, color_set=9):
     pred_vector = LabColor(float(unnorm_vector[0]), float(unnorm_vector[1]), float(unnorm_vector[2]))

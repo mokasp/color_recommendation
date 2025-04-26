@@ -47,9 +47,11 @@ def process_image():
                 # load MediaPipe Face Mesh
                 mp_face_mesh = mp.solutions.face_mesh
 
-                prediction, input_vectors_lab, output_lab = predict(resized_img, mp_face_mesh)
+                prediction, input_vectors_lab, output_lab, norm_input_vectors_lab = predict(resized_img, mp_face_mesh)
+
                 logging.debug(f"prediction: {prediction}")
                 logging.debug(f"input_lab_vectors: {input_vectors_lab}")
+                logging.debug(f"input_lab_vectors: {norm_input_vectors_lab}")
                 logging.debug(f"output_lab: {output_lab}")
 
 
