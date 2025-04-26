@@ -63,7 +63,11 @@ def process_image():
                 best_color_rgb = lab_to_rgb(best_color)
                 logging.debug(f"best color: {best_color_rgb}")
                 hex_color = "#{:02}{:02X}{:02X}".format(best_color_rgb[0], best_color_rgb[1], best_color_rgb[2])
-                return render_template('process_image.html', image_data=True, output_img=img_base64, prediction=prediction, rgb_prediction=best_color_rgb, hex_prediction=hex_color)
+                
+                str_rgb = best_color_rgb[0] + best_color_rgb[1] + best_color_rgb[2]
+                file_name = "/colors/shade_" + str_rgb + ".png"
+                logging.debug(file_name)
+                return render_template('process_image.html', image_data=True, output_img=img_base64, file_name=file_name, prediction=prediction, rgb_prediction=best_color_rgb, hex_prediction=hex_color)
             else:
                 return 'Error decoding image'
         else:
