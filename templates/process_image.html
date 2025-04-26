@@ -14,9 +14,7 @@
         <br>
         <form id="upload-form" method="POST" enctype="multipart/form-data">
           <input type="hidden" name="image" id="image-input">
-          <button type="button" id="capture" data-action="/">Capture Frame</button>
-          <button type="button" id="palette" data-action="/palette">Extract Palette</button>
-          <button type="button" id="predict" data-action="/predict">Predict</button>
+          <button type="button" id="predict" data-action="/process_image">Predict</button>
         </form>
 
         {% if img_data %}
