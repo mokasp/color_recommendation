@@ -20,16 +20,10 @@ np.asscalar = lambda x: float(x)
 colors, color_lists = load_colors()
 color_lists_lab = process_color_lists(color_lists)
 
-@app.route('/')
+
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
-
-@app.route('/button1')
-def button1():
-    return render_template('button1.html')
-
-@app.route('/process_image', methods=['GET', 'POST'])
-def process_image():
     if request.method == 'POST':
         data_url = request.form['image']  # base64 string
 
@@ -67,9 +61,9 @@ def process_image():
                 str_rgb = str(best_color_rgb[0]) + str(best_color_rgb[1]) + str(best_color_rgb[2])
                 file_name = "/colors/shade_" + str_rgb + ".png"
                 logging.debug(file_name)
-                return render_template('process_image.html', image_data=True, output_img=img_base64, file_name=file_name, prediction=prediction, rgb_prediction=best_color_rgb, hex_prediction=hex_color)
+                return render_template('index.html', image_data=True, output_img=img_base64, file_name=file_name, prediction=prediction, rgb_prediction=best_color_rgb, hex_prediction=hex_color)
             else:
                 return 'Error decoding image'
         else:
             return 'Invalid image data'
-    return render_template('process_image.html', image_data=False)
+    return render_template('index.html', image_data=False)
