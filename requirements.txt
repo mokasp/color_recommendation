@@ -7,3 +7,4 @@ scikit-image
 colormath
 mediapipe
 psutil
+requests
