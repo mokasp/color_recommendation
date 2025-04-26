@@ -72,7 +72,7 @@ def rgb_to_lab(rgb_vector):
     return lab_vector[0, 0]
 
 def lab_to_rgb(lab_vector):
-    lab_vector = np.array([lab_vector.lab_l, lab_vector.lab_a, lab_vector.lab_b])
+    lab_vector = np.array(lab_vector)
     lab_vector = lab_vector.reshape(1, 1, 3)
     rgb_vector = skimage.color.lab2rgb(lab_vector)
 

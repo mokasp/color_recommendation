@@ -57,10 +57,10 @@ def process_image():
 
                 logging.debug(np.__version__)
 
-                best_color = get_best_color(prediction, color_lists_lab, color_lists)
-                logging.debug(f"best color: {best_color}")
+                best_color_rgb = get_best_color(prediction, color_lists_lab, color_lists)
+                logging.debug(f"best color: {best_color_rgb}")
 
-                best_color_rgb = lab_to_rgb(best_color)
+                
                 logging.debug(f"best color: {best_color_rgb}")
                 hex_color = "#{:02}{:02X}{:02X}".format(best_color_rgb[0], best_color_rgb[1], best_color_rgb[2])
                 
