@@ -26,65 +26,66 @@
             <h2>RGB: </h2><p>{{ rgb_prediction }}</p>
 
             <h2>HEX: </h2><p>{{ hex_prediction }}</p>
+        {% else %}
+
+          <script>
+              const video = document.getElementById('video');
+              const canvas = document.getElementById('canvas');
+              const imageInput = document.getElementById('image-input');
+              const form = document.getElementById('upload-form');
+            
+              const constraints = {
+                audio: false,
+                video: {
+                  width: { ideal: 1280 },
+                  height: { ideal: 720 },
+                  facingMode: "user"
+                }
+              };
+            
+              navigator.mediaDevices.getUserMedia(constraints)
+                .then((stream) => {
+                  video.srcObject = stream;
+            
+                  // Wait for video metadata to be loaded
+                  video.onloadedmetadata = () => {
+                    // resize canvas to match video
+                    const scale = 0.25;
+                    canvas.width = video.videoWidth * scale;
+                    canvas.height = video.videoHeight * scale;
+                  };
+                })
+                .catch((err) => {
+                  console.error("Error accessing webcam:", err);
+                });
+          
+            function handleCaptureClick(event) {
+              const target = event.target;
+              const action = target.getAttribute('data-action');
+          
+              if (!action) return;
+          
+              const context = canvas.getContext('2d');
+              context.drawImage(video, 0, 0, canvas.width, canvas.height);
+          
+              const dataURL = canvas.toDataURL('image/jpeg');
+              imageInput.value = dataURL;
+
+              const stream = video.srcObject;
+              const tracks = stream.getTracks();
+              tracks.forEach(track => track.stop());
+              video.srcObject = null;
+              video.style.display = 'none';
+          
+              form.action = action;
+              form.submit();
+            }
+          
+            document.querySelectorAll('button[data-action]').forEach(button => {
+              button.addEventListener('click', handleCaptureClick);
+            });
+          </script> 
         {% endif %}
-
-        <script>
-            const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
-            const imageInput = document.getElementById('image-input');
-            const form = document.getElementById('upload-form');
-          
-            const constraints = {
-              audio: false,
-              video: {
-                width: { ideal: 1280 },
-                height: { ideal: 720 },
-                facingMode: "user"
-              }
-            };
-          
-            navigator.mediaDevices.getUserMedia(constraints)
-              .then((stream) => {
-                video.srcObject = stream;
-          
-                // Wait for video metadata to be loaded
-                video.onloadedmetadata = () => {
-                  // resize canvas to match video
-                  const scale = 0.25;
-                  canvas.width = video.videoWidth * scale;
-                  canvas.height = video.videoHeight * scale;
-                };
-              })
-              .catch((err) => {
-                console.error("Error accessing webcam:", err);
-              });
-        
-          function handleCaptureClick(event) {
-            const target = event.target;
-            const action = target.getAttribute('data-action');
-        
-            if (!action) return;
-        
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        
-            const dataURL = canvas.toDataURL('image/jpeg');
-            imageInput.value = dataURL;
-
-            const stream = video.srcObject;
-            const tracks = stream.getTracks();
-            tracks.forEach(track => track.stop());
-            video.srcObject = null;
-            video.style.display = 'none';
-        
-            form.action = action;
-            form.submit();
-          }
-        
-          document.querySelectorAll('button[data-action]').forEach(button => {
-            button.addEventListener('click', handleCaptureClick);
-          });
-        </script> 
     </body>
 </html>
         
