@@ -1,7 +1,7 @@
 flask
 gunicorn
 Pillow
-numpy
+numpy>=1.26.2
 opencv-python
 scikit-image
 colormath
