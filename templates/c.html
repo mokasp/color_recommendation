@@ -11,7 +11,7 @@
 
             <h1 class="title">CAPTURED IMAGE</h1>
             <img src="data:image/jpeg;base64,{{ output_img }}" width="800" alt="processed image"><br>
-            <form method="GET" action="/c">
+            <form method="GET" action="/process_image">
               <button type="submit">Take Another Picture</button>
             </form>
             <form method="POST" action="/predict_color">
@@ -27,7 +27,7 @@
             <br>
             <form id="upload-form" method="POST" enctype="multipart/form-data">
               <input type="hidden" name="image" id="image-input">
-              <button type="button" id="capture" data-action="/c">Capture Image</button>
+              <button type="button" id="capture" data-action="/process_image">Capture Image</button>
             </form>
 
         {% endif %}

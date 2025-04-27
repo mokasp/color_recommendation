@@ -69,8 +69,8 @@ def index():
     return render_template('index.html', image_data=False)
 
 
-@app.route('/c', methods=['GET', 'POST'])
-def c():
+@app.route('/process_image', methods=['GET', 'POST'])
+def process_image():
     if request.method == 'POST':
         data_url = request.form['image']  # base64 string
 
