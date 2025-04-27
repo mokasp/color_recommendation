@@ -52,9 +52,8 @@
                     // Wait for video metadata to be loaded
                     video.onloadedmetadata = () => {
                       // resize canvas to match video
-                      const scale = 0.25;
-                      canvas.width = video.videoWidth * scale;
-                      canvas.height = video.videoHeight * scale;
+                      canvas.width = video.videoWidth;
+                      canvas.height = video.videoHeight;
                     };
                   })
                   .catch((err) => {
