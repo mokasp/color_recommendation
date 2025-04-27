@@ -17,3 +17,9 @@ body {
     font-weight: bold;
     margin: 0.5em 0;
 }
+
+button {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    touch-action: manipulation;
+  }
