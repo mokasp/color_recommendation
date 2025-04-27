@@ -43,7 +43,7 @@ def index():
                 mp_face_mesh = mp.solutions.face_mesh
 
                 prediction, input_vectors_lab, output_lab, norm_input_vectors_lab = predict(resized_img, mp_face_mesh)
-                unnorm_pred = unnormalize_vector(prediction)
+                unnorm_pred = unnormalize_vector(np.array(prediction))
                 logging.debug(f"prediction: {prediction}")
                 logging.debug(f"input_lab_vectors: {input_vectors_lab}")
                 logging.debug(f"input_lab_vectors: {norm_input_vectors_lab}")
