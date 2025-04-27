@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Recommendation System</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        {% if image_data %}
+
+            <h1 class="title">PREDICTION</h1>
+            <img src="data:image/jpeg;base64,{{ output_img }}" width="800" alt="processed image"><br>
+            <img src="{{ url_for('static', filename=file_name) }}" width="800" height="75" alt="processed image">
+            <p class="label"><strong>LAB: </strong>{{ prediction }}</p>
+            <p class="label"><strong>RGB: </strong>{{ rgb_prediction }}</p>
+            <p class="label"><strong>HEX: </strong>{{ hex_prediction }}</p>                  
+            <form method="GET" action="/c">
+              <button type="submit">Try Again</button>
+            </form>
+          
+        {% else %}
+
+            <form method="GET" action="/c">
+              <button type="submit">Capture Image</button>
+            </form>
+
+        {% endif %}
+        <script>
+          const canvas = document.getElementById('canvas');
+          const imageInput = document.getElementById('image-input');
+          const form = document.getElementById('upload-form');
+        
+      
+          function handleCaptureClick(event) {
+            const target = event.target;
+            const action = target.getAttribute('data-action');
+        
+            if (!action) return;
+        
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+            const dataURL = canvas.toDataURL('image/jpeg');
+            imageInput.value = dataURL;
+
+        
+            form.action = action;
+            form.submit();
+          }
+        
+          document.querySelectorAll('button[data-action]').forEach(button => {
+            button.addEventListener('click', handleCaptureClick);
+          });
+        </script> 
+    </body>
+</html>
+        

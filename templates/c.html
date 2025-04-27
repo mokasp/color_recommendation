@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Recommendation System</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        {% if image_data %}
+
+            <h1 class="title">CAPTURED IMAGE</h1>
+            <img src="data:image/jpeg;base64,{{ output_img }}" width="800" alt="processed image"><br>
+            <img src="{{ url_for('static', filename=file_name) }}" width="800" height="75" alt="processed image">
+            <form method="GET" action="/c">
+              <button type="submit">Take Another Picture</button>
+            </form>
+            <form method="POST" action="/predict_color">
+              <input type="hidden" name="image" value="data:image/jpeg;base64,{{ output_img }}">
+              <button type="submit">Predict</button>
+            </form>
+          
+        {% else %}
+            <h1>Webcam Capture</h1>
+
+            <video id="video" width="800" autoplay></video>
+            <canvas id="canvas" style="display: none;"></canvas>
+            <br>
+            <form id="upload-form" method="POST" enctype="multipart/form-data">
+              <input type="hidden" name="image" id="image-input">
+              <button type="button" id="capture" data-action="/c">Capture Image</button>
+            </form>
+
+        {% endif %}
+        <script>
+          const video = document.getElementById('video');
+          const canvas = document.getElementById('canvas');
+          const imageInput = document.getElementById('image-input');
+          const form = document.getElementById('upload-form');
+        
+          const constraints = {
+            audio: false,
+            video: {
+              width: { ideal: 1280 },
+              height: { ideal: 720 },
+              facingMode: "user"
+            }
+          };
+        
+          navigator.mediaDevices.getUserMedia(constraints)
+            .then((stream) => {
+              video.srcObject = stream;
+        
+              // Wait for video metadata to be loaded
+              video.onloadedmetadata = () => {
+                // resize canvas to match video
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+              };
+            })
+            .catch((err) => {
+              console.error("Error accessing webcam:", err);
+            });
+      
+          function handleCaptureClick(event) {
+            const target = event.target;
+            const action = target.getAttribute('data-action');
+        
+            if (!action) return;
+        
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+            const dataURL = canvas.toDataURL('image/jpeg');
+            imageInput.value = dataURL;
+
+            const stream = video.srcObject;
+            const tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+            video.srcObject = null;
+            video.style.display = 'none';
+        
+            form.action = action;
+            form.submit();
+          }
+        
+          document.querySelectorAll('button[data-action]').forEach(button => {
+            button.addEventListener('click', handleCaptureClick);
+          });
+        </script> 
+    </body>
+</html>
+        

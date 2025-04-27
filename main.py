@@ -67,3 +67,65 @@ def index():
         else:
             return 'Invalid image data'
     return render_template('index.html', image_data=False)
+
+
+@app.route('/c', methods=['GET', 'POST'])
+def c():
+    if request.method == 'POST':
+        data_url = request.form['image']  # base64 string
+
+        if data_url.startswith('data:image'):
+            header, encoded = data_url.split(",", 1)
+            image_data = base64.b64decode(encoded)
+            np_arr = np.frombuffer(image_data, np.uint8)
+            img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+            resized_img = cv2.resize(img, (960, 540))
+            logging.debug(f"image: {np_arr}")
+
+            if img is not None:
+                _, buffer = cv2.imencode('.jpg', img)
+                img_base64 = base64.b64encode(buffer).decode('utf-8')
+
+                return render_template('c.html', image_data=True, output_img=img_base64)
+            else:
+                return 'Error decoding image'
+        else:
+            return 'Invalid image data'
+    return render_template('c.html', image_data=False)
+
+
+@app.route('/predict_color', methods=['GET', 'POST'])
+def predict():
+    if request.method == 'POST':
+        data_url = request.form['image']  # base64 string
+
+        if data_url.startswith('data:image'):
+            header, encoded = data_url.split(",", 1)
+            image_data = base64.b64decode(encoded)
+            np_arr = np.frombuffer(image_data, np.uint8)
+            img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+            resized_img = cv2.resize(img, (960, 540))
+            logging.debug(f"image: {np_arr}")
+
+            if img is not None:
+                _, buffer = cv2.imencode('.jpg', img)
+                img_base64 = base64.b64encode(buffer).decode('utf-8')
+
+                # load MediaPipe Face Mesh
+                mp_face_mesh = mp.solutions.face_mesh
+
+                prediction, input_vectors_lab, output_lab, norm_input_vectors_lab = predict(resized_img, mp_face_mesh)
+                unnorm_pred = unnormalize_vector(np.array(prediction))
+
+                best_color_rgb = get_best_color(prediction, color_lists_lab, color_lists)
+
+                hex_color = "#{:02}{:02X}{:02X}".format(best_color_rgb[0], best_color_rgb[1], best_color_rgb[2])
+                
+                str_rgb = str(best_color_rgb[0]) + str(best_color_rgb[1]) + str(best_color_rgb[2])
+                file_name = "/colors/shade_" + str_rgb + ".png"
+                return render_template('predict.html', image_data=True, output_img=img_base64, file_name=file_name, prediction=unnorm_pred, rgb_prediction=best_color_rgb, hex_prediction=hex_color)
+            else:
+                return 'Error decoding image'
+        else:
+            return 'Invalid image data'
+    return render_template('predict.html', image_data=False)
