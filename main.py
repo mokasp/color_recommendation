@@ -95,7 +95,7 @@ def c():
 
 
 @app.route('/predict_color', methods=['GET', 'POST'])
-def predict():
+def predict_color():
     if request.method == 'POST':
         data_url = request.form['image']  # base64 string
 

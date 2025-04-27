@@ -11,7 +11,6 @@
 
             <h1 class="title">CAPTURED IMAGE</h1>
             <img src="data:image/jpeg;base64,{{ output_img }}" width="800" alt="processed image"><br>
-            <img src="{{ url_for('static', filename=file_name) }}" width="800" height="75" alt="processed image">
             <form method="GET" action="/c">
               <button type="submit">Take Another Picture</button>
             </form>
