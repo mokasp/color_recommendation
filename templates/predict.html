@@ -15,13 +15,13 @@
             <p class="label"><strong>LAB: </strong>{{ prediction }}</p>
             <p class="label"><strong>RGB: </strong>{{ rgb_prediction }}</p>
             <p class="label"><strong>HEX: </strong>{{ hex_prediction }}</p>                  
-            <form method="GET" action="/c">
+            <form method="GET" action="/process_image">
               <button type="submit">Try Again</button>
             </form>
           
         {% else %}
 
-            <form method="GET" action="/c">
+            <form method="GET" action="/process_image">
               <button type="submit">Capture Image</button>
             </form>
 
