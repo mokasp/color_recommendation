@@ -86,7 +86,7 @@ def process_image():
                 _, buffer = cv2.imencode('.jpg', img)
                 img_base64 = base64.b64encode(buffer).decode('utf-8')
 
-                return render_template('c.html', image_data=True, output_img=img_base64)
+                return render_template('process_image.html', image_data=True, output_img=img_base64)
             else:
                 return 'Error decoding image'
         else:
