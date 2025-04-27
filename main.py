@@ -6,7 +6,7 @@ from io import BytesIO
 import numpy as np
 import cv2
 from app.colorspace import load_colors, process_color_lists, lab_to_rgb
-from app.predictions import predict, get_best_color
+from app.predictions import predict, get_best_color, unnormalize_vector
 import mediapipe as mp
 import logging
 
@@ -43,7 +43,7 @@ def index():
                 mp_face_mesh = mp.solutions.face_mesh
 
                 prediction, input_vectors_lab, output_lab, norm_input_vectors_lab = predict(resized_img, mp_face_mesh)
-
+                unnorm_pred = unnormalize_vector(prediction)
                 logging.debug(f"prediction: {prediction}")
                 logging.debug(f"input_lab_vectors: {input_vectors_lab}")
                 logging.debug(f"input_lab_vectors: {norm_input_vectors_lab}")
@@ -61,7 +61,7 @@ def index():
                 str_rgb = str(best_color_rgb[0]) + str(best_color_rgb[1]) + str(best_color_rgb[2])
                 file_name = "/colors/shade_" + str_rgb + ".png"
                 logging.debug(file_name)
-                return render_template('index.html', image_data=True, output_img=img_base64, file_name=file_name, prediction=prediction, rgb_prediction=best_color_rgb, hex_prediction=hex_color)
+                return render_template('index.html', image_data=True, output_img=img_base64, file_name=file_name, prediction=unnorm_pred, rgb_prediction=best_color_rgb, hex_prediction=hex_color)
             else:
                 return 'Error decoding image'
         else:
