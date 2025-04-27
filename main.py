@@ -91,7 +91,7 @@ def process_image():
                 return 'Error decoding image'
         else:
             return 'Invalid image data'
-    return render_template('c.html', image_data=False)
+    return render_template('process_image.html', image_data=False)
 
 
 @app.route('/predict_color', methods=['GET', 'POST'])
