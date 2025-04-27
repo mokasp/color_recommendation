@@ -13,3 +13,10 @@ h1 {
 p {
     font-size: 18px;
 }
+
+.label {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0.5em 0;
+  }
+  
